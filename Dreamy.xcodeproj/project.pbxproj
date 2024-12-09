@@ -34,7 +34,7 @@
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
 			buildPhase = D194A7352D01D6A8004F063F /* Sources */;
 			membershipExceptions = (
-				prompts.json,
+				Resources/prompts.json,
 			);
 		};
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
