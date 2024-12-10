@@ -26,19 +26,15 @@ struct PromptListView: View {
                 ScrollViewReader { proxy in
                     ScrollView(.horizontal, showsIndicators: false) {
                         MosaicLayout(viewportWidth: UIScreen.main.bounds.width, spacing: itemsSpacing) {
-                            ForEach(store.prompts) { prompt in
-                                ForEach(0..<4) { index in
-                                    let imageId = ImageId(prompt: prompt, index: index)
-
-                                    Image(prompt.imageNames[index])
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                                        .onTapGesture {
-                                            onSelectImage(imageId)
-                                        }
-                                        .id(imageId)
-                                }
+                            ForEach(store.prompts.flatMap(\.allImageIds)) { imageId in
+                                imageId.image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    .onTapGesture {
+                                        onSelectImage(imageId)
+                                    }
+                                    .id(imageId)
                             }
                         }
                         .scrollTargetLayout()
@@ -58,22 +54,24 @@ struct PromptListView: View {
             }
         }
         .onChange(of: visibleImageId) {
-            visiblePromptText = visibleImageId?.prompt.text ?? store.prompts.first?.text ?? ""
+            updateVisiblePromptText()
         }
         .onAppear {
-            visiblePromptText = visibleImageId?.prompt.text ?? store.prompts.first?.text ?? ""
+            updateVisiblePromptText()
         }
         .background {
             Color(white: 0.1).ignoresSafeArea(.all)
         }
     }
+
+    func updateVisiblePromptText() {
+        visiblePromptText = visibleImageId?.prompt.text ?? store.prompts.first?.text ?? ""
+    }
 }
 
-private let store = PromptsStore()
-
 #Preview {
-    @Previewable @State var visibleImageId: ImageId? = store.prompts[2].allImageIds[0]
+    @Previewable @State var visibleImageId: ImageId?
 
     PromptListView(visibleImageId: $visibleImageId, onSelectImage: { _ in })
-        .environment(store)
+        .environment(PromptsStore())
 }

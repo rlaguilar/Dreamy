@@ -8,19 +8,27 @@ struct ContentView: View {
     @State var slideShowVisibleImageId: ImageId?
 
     var body: some View {
-        if slideShowVisibleImageId != nil {
-            ImageSlideshowView(images: promptsStore.prompts.flatMap(\.allImageIds), visibleImageId: $slideShowVisibleImageId) {
-                if let slideShowVisibleImageId {
-                    promptListVisibleImageId = slideShowVisibleImageId.prompt.allImageIds.first
+        // TODO: Implement transition using MatchedGeometryEffect
+        if slideShowVisibleImageId == nil {
+            PromptListView(visibleImageId: $promptListVisibleImageId, onSelectImage: { imageId in
+                withAnimation {
+                    slideShowVisibleImageId = imageId
                 }
+            })
+        } else {
+            ImageSlideshowView(
+                imageIds: promptsStore.prompts.flatMap(\.allImageIds),
+                visibleImageId: $slideShowVisibleImageId,
+                onDismiss: {
+                    if let slideShowVisibleImageId {
+                        promptListVisibleImageId = slideShowVisibleImageId.prompt.allImageIds.first
+                    }
 
-                slideShowVisibleImageId = nil
-            }
-        }
-        else {
-            PromptListView(visibleImageId: $promptListVisibleImageId) { imageId in
-                slideShowVisibleImageId = imageId
-            }
+                    withAnimation {
+                        slideShowVisibleImageId = nil
+                    }
+                }
+            )
         }
     }
 }
