@@ -9,8 +9,4 @@ struct Prompt: Hashable, Codable, Identifiable {
     }
 }
 
-struct ImageId: Hashable {
-    var prompt: Prompt
-    
-    var index: Int
-}
+
