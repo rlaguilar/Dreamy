@@ -7,16 +7,16 @@ struct Word: Identifiable {
 }
 
 struct DiffView: View {
-    var wordsSpacing: CGFloat = 4.3
+    @Binding var text: String
+
+    var wordsSpacing: CGFloat = 4.2
 
     var linesHeight: CGFloat = 1
 
-    @Binding var text: String
-
-    @State var words: [Word] = []
+    @State private var words: [Word] = []
 
     var body: some View {
-        HStack(spacing: wordsSpacing) {
+        WordsLayout(spacing: wordsSpacing, linesHeight: linesHeight) {
             ForEach(words) { word in
                 Text(word.text)
             }
@@ -65,11 +65,17 @@ extension EditDistance {
 #Preview {
     @Previewable @State var index = 0
     @Previewable @State var texts = [
+        "Love is a deep affection, care, and connection, often selfless, shared between people, ideas, or life itself.",
         "What is love",
         "This is amazing love"
     ]
     NavigationStack {
         DiffView(text: $texts[index])
+            .overlay {
+                // Uncomment to see how our custom layout compares to the default SwiftUI text layout.
+                Text(texts[index])
+                    .border(Color.green)
+            }
             .toolbar {
                 Button("Change Text") {
                     index = (index + 1) % texts.count

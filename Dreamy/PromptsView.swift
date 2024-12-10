@@ -5,20 +5,21 @@ struct PromptsView: View {
 
     @State var visibleImageId: ImageId?
 
+    @State var visiblePromptText = ""
+
     private let itemsSpacing: CGFloat = 6
 
     var body: some View {
         ScrollView(.vertical) {
             VStack(spacing: 24) {
-                if let visiblePrompt = visibleImageId?.prompt ?? store.prompts.first {
-                    Text(visiblePrompt.text)
-                        .foregroundStyle(Color.white.opacity(0.7))
-                        .font(.body)
-                        .fontWeight(.medium)
-                        .padding()
-                        .padding(.top, 48)
-                        .animation(.easeIn, value: visibleImageId)
-                }
+                // To support dynamic type we need to use @ScaledMetric for these values
+                DiffView(text: $visiblePromptText, wordsSpacing: 4.3, linesHeight: 1.09)
+                    .foregroundStyle(Color.white.opacity(0.7))
+                    .font(.body)
+                    .fontWeight(.medium)
+                    .padding()
+                    .padding(.top, 48)
+                    .animation(.easeIn, value: visibleImageId)
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     MosaicLayout(viewportWidth: UIScreen.main.bounds.width, spacing: itemsSpacing) {
@@ -55,6 +56,12 @@ struct PromptsView: View {
                     }
                 }
             }
+        }
+        .onChange(of: visibleImageId) {
+            visiblePromptText = visibleImageId?.prompt.text ?? store.prompts.first?.text ?? ""
+        }
+        .onAppear {
+            visiblePromptText = visibleImageId?.prompt.text ?? store.prompts.first?.text ?? ""
         }
         .background {
             Color(white: 0.1).ignoresSafeArea(.all)
