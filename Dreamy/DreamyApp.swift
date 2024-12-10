@@ -11,7 +11,7 @@ import SwiftUI
 struct DreamyApp: App {
     var body: some Scene {
         WindowGroup {
-            PromptsView()
+            ContentView()
                 .environment(PromptsStore())
         }
     }

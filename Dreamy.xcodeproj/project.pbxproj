@@ -29,22 +29,9 @@
 		D194A7532D01D6AA004F063F /* DreamyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DreamyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		D1A4C77D2D0704A6009A0DB8 /* Exceptions for "Dreamy" folder in "Compile Sources" phase from "Dreamy" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = D194A7352D01D6A8004F063F /* Sources */;
-			membershipExceptions = (
-				Resources/prompts.json,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		D194A73B2D01D6A8004F063F /* Dreamy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				D1A4C77D2D0704A6009A0DB8 /* Exceptions for "Dreamy" folder in "Compile Sources" phase from "Dreamy" target */,
-			);
 			path = Dreamy;
 			sourceTree = "<group>";
 		};
