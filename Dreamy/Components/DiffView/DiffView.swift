@@ -9,9 +9,9 @@ struct Word: Identifiable {
 struct DiffView: View {
     @Binding var text: String
 
-    var wordsSpacing: CGFloat = 4.2
+    var wordsSpacing: CGFloat = 4.3
 
-    var linesHeight: CGFloat = 1
+    var linesHeight: CGFloat = 1.1
 
     @State private var words: [Word] = []
 
@@ -73,8 +73,8 @@ extension EditDistance {
         DiffView(text: $texts[index])
             .overlay {
                 // Uncomment to see how our custom layout compares to the default SwiftUI text layout.
-                Text(texts[index])
-                    .border(Color.green)
+//                Text(texts[index])
+//                    .border(Color.green)
             }
             .toolbar {
                 Button("Change Text") {

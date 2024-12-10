@@ -45,16 +45,16 @@ struct ImageSlideshowView: View {
 
     @ViewBuilder
     var blurBackground: some View {
+        let visibleIndices = (scrollBounds.minX * CGFloat(imageIds.count) / scrollBounds.width)
+            .clamped(min: 0, max: CGFloat(imageIds.count - 1))
+
+        let fromIndex = Int(visibleIndices.rounded(.down))
+        let reminder = visibleIndices - visibleIndices.rounded(.down)
+
         ZStack {
-            let visibleIndices = (scrollBounds.minX * CGFloat(imageIds.count) / scrollBounds.width)
-                .clamped(min: 0, max: CGFloat(imageIds.count - 1))
-
-            let fromIndex = Int(visibleIndices.rounded(.down))
-
+            // we are using full sized images here, but could get away with low quality ones if necessary
             imageIds[fromIndex].image
                 .resizable()
-
-            let reminder = visibleIndices - visibleIndices.rounded(.down)
 
             if reminder > 0 {
                 imageIds[fromIndex + 1].image
@@ -67,16 +67,9 @@ struct ImageSlideshowView: View {
     }
 }
 
-extension CGFloat {
-    func clamped(min a: CGFloat, max b: CGFloat) -> CGFloat {
-        a < self ? Swift.min(self, b) : a
-    }
-}
-
-private let store = PromptsStore()
-
 #Preview {
-    @Previewable @State var visibleImageId: ImageId? = store.prompts[0].allImageIds[3]
+    @Previewable @State var visibleImageId: ImageId?
 
+    let store = PromptsStore()
     ImageSlideshowView(imageIds: store.prompts[0].allImageIds, visibleImageId: $visibleImageId)
 }

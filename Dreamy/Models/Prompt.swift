@@ -8,5 +8,3 @@ struct Prompt: Hashable, Codable, Identifiable {
         (1...4).map { "\(id)-\($0)" }
     }
 }
-
-

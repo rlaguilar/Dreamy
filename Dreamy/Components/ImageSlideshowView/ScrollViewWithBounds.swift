@@ -41,7 +41,11 @@ struct ScrollViewWithBounds<Content: View>: View {
 }
 
 #Preview {
-    ScrollViewWithBounds(bounds: .constant(.zero)) {
+    @Previewable @State var bounds: CGRect = .zero
+    ScrollViewWithBounds(bounds: $bounds) {
         Text("Hello, World!")
+    }
+    .onChange(of: bounds) {
+        print(bounds)
     }
 }

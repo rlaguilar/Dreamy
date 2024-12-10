@@ -10,9 +10,3 @@ struct ImageId: Hashable, Identifiable {
 
     var index: Int
 }
-
-extension Prompt {
-    var allImageIds: [ImageId] {
-        return (0 ..< imageNames.count).map { ImageId(prompt: self, index: $0) }
-    }
-}

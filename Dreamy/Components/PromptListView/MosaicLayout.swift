@@ -71,7 +71,7 @@ struct MosaicLayout: Layout {
         let smallWidth = smallHeight * aspectRatios[index + 1]
 
         let one = CGRect(
-            x: xOffset, //answer.last.map { $0.maxX + spacing } ?? 0,
+            x: xOffset,
             y: 0,
             width: largeWidth,
             height: largeHeight
@@ -108,7 +108,7 @@ struct MosaicLayout: Layout {
         let smallHeight = smallWidth / aspectRatios[index]
 
         let one = CGRect(
-            x: xOffset, // answer.last.map { $0.maxX + spacing } ?? 0,
+            x: xOffset,
             y: 0,
             width: largeWidth,
             height: largeHeight
@@ -146,11 +146,5 @@ struct CarouselScrollTargetBehaviour: ScrollTargetBehavior {
         let pageWidth = context.containerSize.width - 3 * spacing
         let remaining = target.rect.origin.x.remainder(dividingBy: pageWidth)
         target.rect.origin.x -= remaining
-    }
-}
-
-private extension CGSize {
-    var aspectRatio: CGFloat {
-        width / height
     }
 }
